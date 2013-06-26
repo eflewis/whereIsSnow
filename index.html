@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+	<head>
+		<style type="text/css">
+			/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+			@-webkit-keyframes ani1{
+				0% {top: 100px; left: 100px;}
+				25% {top: 110px; left: 95px;}
+				50% {top: 105px; left: 100px;}
+				75% {top: 100px; left: 104px;}
+				100% {top: 100px; left: 100px;}
+			}
+
+			@-webkit-keyframes ani2{
+				0% {top: 450px; left: 600px;}
+				25% {top: 440px; left: 590px;}
+				50% {top: 435px; left: 595px;}
+				75% {top: 460px; left: 603px;}
+				100% {top: 450px; left: 600px;}
+			}
+
+			@-webkit-keyframes ani3{
+				0% {top: 150px; left: 850px;}
+				25% {top: 170px; left: 855px;}
+				50% {top: 175px; left: 865px;}
+				75% {top: 170px; left: 845px;}
+				100% {top: 150px; left: 850px;}
+			}
+
+			@-webkit-keyframes ani4{
+				0% {top: -100px; left: 600px;}
+				25% {top: -85px; left: 597px;}
+				50% {top: -90px; left: 615px;}
+				75% {top: -95px; left: 605px;}
+				100% {top: -100px; left: 600px;}
+			}
+
+			@-webkit-keyframes ani5{
+				0% {top: -24px; left: 751px; height: 268px; -webkit-transform: rotate(-21.5deg);}
+				25% {top: -9px; left: 748px; height: 278px; -webkit-transform: rotate(-22.5deg);}
+				50% {top: -14px; left: 766px; height: 282px; -webkit-transform: rotate(-20.5deg);}
+				75% {top: -19px; left: 775px; height: 273px; -webkit-transform: rotate(-14.5deg);}
+				100% {top: -24px; left: 751px;}
+			}
+
+			body{
+				position: relative;
+				display: block;
+				width: 100%;
+				background-color: #000;
+			}
+
+			#container{
+				position: relative;
+				display: block;
+				width: 100%;
+			}
+
+			.floater{
+				position: absolute;
+				opacity: 0.5;
+			}
+
+			#image1{	
+				top: 100px;
+				left: 100px;
+				-webkit-animation: ani1 5s infinite linear;
+			}
+
+			#image2{
+				top: 450px;
+				left: 600px;
+				/*-webkit-animation: ani2 10s infinite linear;*/
+			}
+
+			#image3{
+				top: 150px;
+				left: 850px;
+				-webkit-animation: ani3 10s infinite linear;
+			}
+
+			#image4{
+				top: -100px;
+				left: 600px;
+				-webkit-animation: ani4 10s infinite linear;
+			}
+
+			#image5{
+				top: -24px;
+				left: 753px;
+				height: 270px;
+				-webkit-transform-origin: 0 0;
+				-webkit-transform: rotate(-21deg);
+				-webkit-animation: ani5 10s infinite linear;
+			}
+
+			#image6{
+				top: 449px;
+				left: 646px;
+				height: 300px;
+				-webkit-transform-origin: 0 0;
+				-webkit-transform: rotate(-115deg);
+			}
+
+			#headline{
+				position: relative;
+				display: block;
+				width: 40%;
+				margin: 15px auto;
+				z-index: 1;
+			}
+
+			h2{
+				color: #fff;
+				font-family: sans-serif;
+				font-size: 22px;
+				font-weight: 600;
+				text-align: center;
+			}
+
+			h1{
+				font-family: sans-serif;
+				font-size: 35px;
+				font-weight: 950;
+				background-color: #fff;
+				text-align: center;
+				letter-spacing: 3px;
+				margin-top: -3px;
+			}
+
+			h3{
+				font-family: sans-serif;
+				font-size: 16px;
+				color: #fff;
+				text-align: center;
+				font-weight: 100;
+				line-height: 22px;
+			}
+
+			#tweetContainer{
+				position: relative;
+				display: block;
+				width: 45%;
+				min-height: 100px;
+				margin: 50px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<img id="image1" class="floater" src="triangle.png"></img>
+			<img id="image2" class="floater" src="triangle.png"></img>
+			<img id="image3" class="floater" src="rhombus.png"></img>
+			<img id="image4" class="floater" src="rhombus.png"></img>
+			<img id="image5" class="floater" src="line.png"></img>
+			<img id="image6" class="floater" src="line.png"></img>
+
+			<div id="headline">
+				<h2>WHERE IN THE WORLD</h2>
+				<h1>IS SNOWDEN?</h1>
+			</div>
+			<div id="tweetContainer">
+				<h3>Edward Snowden, if you're reading this tweet, turn yourself in. NSA, if you're reading it, hi!!!!</h3>
+				<h4>@StephenAtHome</h4>
+			</div>
+		</div>
+	</body>
+</html>
