@@ -192,16 +192,24 @@ table {
 				min-height: 100px;
 				margin: 50px auto;
 			}
+
+			#myCanvas{
+				position: absolute;
+				width: 800;
+				height: 800;
+			}
 		</style>
 	</head>
 	<body>
 		<div id="container">
-			<img id="image1" class="floater" src="triangle.png"></img>
+			<!--<img id="image1" class="floater" src="triangle.png"></img>
 			<img id="image2" class="floater" src="triangle.png"></img>
 			<img id="image3" class="floater" src="rhombus.png"></img>
 			<img id="image4" class="floater" src="rhombus.png"></img>
 			<img id="image5" class="floater" src="line.png"></img>
-			<img id="image6" class="floater" src="line.png"></img>
+			<img id="image6" class="floater" src="line.png"></img>-->
+
+			<canvas id="myCanvas"></canvas>
 
 			<div id="headline">
 				<h2>WHERE IN THE WORLD</h2>
@@ -212,5 +220,18 @@ table {
 				<h4>@StephenAtHome</h4>
 			</div>
 		</div>
+		<script type="text/javascript">
+			var canvas = document.getElementById("myCanvas");
+			var ctx = canvas.getContext('2d');
+
+			var square1 = new Image();
+			var square1X = 100;
+			var square1Y = 100;
+
+			square1.onload = function() {
+		        ctx.drawImage(square1, square1X, square1Y);
+		      };
+		      square1.src = "rhombus.png";
+		</script>
 	</body>
 </html>
