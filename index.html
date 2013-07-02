@@ -51,46 +51,6 @@ table {
 	border-spacing: 0;
 }
 
-			@-webkit-keyframes ani1{
-				0% {top: 100px; left: 100px;}
-				25% {top: 110px; left: 95px;}
-				50% {top: 105px; left: 100px;}
-				75% {top: 100px; left: 104px;}
-				100% {top: 100px; left: 100px;}
-			}
-
-			@-webkit-keyframes ani2{
-				0% {top: 450px; left: 600px;}
-				25% {top: 440px; left: 590px;}
-				50% {top: 435px; left: 595px;}
-				75% {top: 460px; left: 603px;}
-				100% {top: 450px; left: 600px;}
-			}
-
-			@-webkit-keyframes ani3{
-				0% {top: 150px; left: 850px;}
-				25% {top: 170px; left: 855px;}
-				50% {top: 175px; left: 865px;}
-				75% {top: 170px; left: 845px;}
-				100% {top: 150px; left: 850px;}
-			}
-
-			@-webkit-keyframes ani4{
-				0% {top: -100px; left: 600px;}
-				25% {top: -85px; left: 597px;}
-				50% {top: -90px; left: 615px;}
-				75% {top: -95px; left: 605px;}
-				100% {top: -100px; left: 600px;}
-			}
-
-			@-webkit-keyframes ani5{
-				0% {top: -24px; left: 751px; height: 268px; -webkit-transform: rotate(-21.5deg);}
-				25% {top: -9px; left: 748px; height: 278px; -webkit-transform: rotate(-22.5deg);}
-				50% {top: -14px; left: 766px; height: 282px; -webkit-transform: rotate(-20.5deg);}
-				75% {top: -19px; left: 775px; height: 273px; -webkit-transform: rotate(-14.5deg);}
-				100% {top: -24px; left: 751px;}
-			}
-
 			body{
 				position: relative;
 				display: block;
@@ -102,6 +62,7 @@ table {
 				position: relative;
 				display: block;
 				width: 100%;
+				z-index: 2;
 			}
 
 			.floater{
@@ -195,9 +156,11 @@ table {
 
 			#myCanvas{
 				position: absolute;
-				width: 800;
-				height: 800;
+				top: 0;
+				left: 0;
+				z-index: 1;
 			}
+
 		</style>
 	</head>
 	<body>
@@ -210,7 +173,6 @@ table {
 			<img id="image6" class="floater" src="line.png"></img>-->
 
 			<canvas id="myCanvas"></canvas>
-
 			<div id="headline">
 				<h2>WHERE IN THE WORLD</h2>
 				<h1>IS SNOWDEN?</h1>
@@ -224,14 +186,151 @@ table {
 			var canvas = document.getElementById("myCanvas");
 			var ctx = canvas.getContext('2d');
 
-			var square1 = new Image();
-			var square1X = 100;
-			var square1Y = 100;
+			var shapes = [];
+			var anchors = [];
 
-			square1.onload = function() {
-		        ctx.drawImage(square1, square1X, square1Y);
-		      };
-		      square1.src = "rhombus.png";
+			function Anchor(x, y){
+				this.x = x;
+				this.y = y;
+				this.twin = null;
+
+				this.move = function(dX, dY){
+					this.x += dX;
+					this.y += dY;
+				}
+
+				this.draw = function(ctx){
+					ctx.globalAlpha = 0.5;
+					ctx.strokeStyle = "rgba(255, 255, 255, 0.5)"
+					ctx.beginPath();
+					ctx.moveTo(this.x, this.y);
+					ctx.lineTo(this.twin.x, this.twin.y);
+					ctx.closePath();
+					ctx.stroke();
+				}
+			}
+
+			function Shape(source, x, y, width, height, ctx){
+				this.image = new Image();
+				this.image.src = source;
+				this.width = width;
+				this.height = height;
+				this.homeX = x;
+				this.homeY = y;
+				this.destX = x;
+				this.destY = y;
+				this.x = x;
+				this.y = y;
+				this.anchors = [];
+
+				this.draw = function(ctx){
+					ctx.globalAlpha = 0.5;
+					//ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+					ctx.putImageData(this.image, this.x, this.y);
+				}
+
+				this.move = function(){
+					var dX = this.destX - this.x > 0 ? 1 : -1;
+					var dY = this.destY - this.y > 0 ? 1 : -1;
+					if(this.destX != this.x){
+						this.x += dX;
+						for(anchor in this.anchors){
+							this.anchors[anchor].move(dX, 0);
+						}
+					}
+					if(this.destY != this.y){
+						this.y += dY;
+						for(anchor in this.anchors){
+							this.anchors[anchor].move(0, dY);
+						}
+					}
+					if(this.destX === this.x && this.destY === this.y){
+						this.getDestination();
+					}
+				}
+
+				this.getDestination = function(){
+					var xDiff = Math.round(Math.random() * (50 - 10) + 10);
+					if(xDiff%2 === 0) xDiff = xDiff * -1;
+
+					var yDiff = Math.round(Math.random() * (50 - 10) + 10);
+					if(yDiff%2 === 0) yDiff = yDiff * -1;
+
+					this.destX = this.homeX + xDiff;
+					this.destY = this.homeY + yDiff;
+				}
+			}
+
+			square1 = new Shape("rhombus.png", 50, 0, 100, 100);
+			square1.getDestination();
+			shapes.push(square1);
+
+			square2 = new Shape("rhombus.png", 300, 400, 100, 100);
+			square2.getDestination();
+			shapes.push(square2);
+
+			tri1 = new Shape("triangle.png", 70, 550, 60, 60);
+			tri1.getDestination();
+			shapes.push(tri1);
+
+			anchor1 = new Anchor(100, 100);
+			anchor2 = new Anchor(350, 400);
+			anchor1.twin = anchor2;
+			anchor2.twin = anchor1;
+
+			anchor3 = new Anchor(100, 550);
+			anchor4 = new Anchor(350, 500);
+			anchor3.twin = anchor4;
+			anchor4.twin = anchor3;
+
+			square1.anchors.push(anchor1);
+			square2.anchors.push(anchor2);
+			square2.anchors.push(anchor4);
+			tri1.anchors.push(anchor3);
+
+			anchors.push(anchor1);
+			anchors.push(anchor3);
+
+			function blurArea(topX, topY, width, height, degree, ctx){
+				var blurDegree = degree*4;
+
+				var imgData= ctx.getImageData(topX, topY, width, height);
+				for (var i=0;i<imgData.data.length;i+=4)
+				    {
+				    imgData.data[i]=255-imgData.data[i];
+				    imgData.data[i+1]=255-imgData.data[i+1];
+				    imgData.data[i+2]=255-imgData.data[i+2];
+				    imgData.data[i+3]=255;
+				    }
+				return(imgData);
+
+			}
+
+			var newImg = blurArea(0, 0, 100, 100, 1, ctx);
+			square1.image = newImg;
+
+			function draw(ctx){
+				ctx.canvas.width  = window.innerWidth;
+  				ctx.canvas.height = window.innerHeight;
+
+  				ctx.clearRect(0,0,ctx.canvas.width, ctx.canvas.height);
+  				for(var i=0; i<shapes.length; i++){
+  					shapes[i].draw(ctx);
+  				}
+  				for(var o = 0; o < anchors.length; o++){
+  					anchors[o].draw(ctx);
+  				}
+			}
+
+			var t = window.setInterval(onTimer, 100);
+
+			function onTimer(){
+				for(var j = 0; j < shapes.length; j++){
+					shapes[j].move();
+				}
+				draw(ctx);
+			}
+		    
 		</script>
 	</body>
 </html>
