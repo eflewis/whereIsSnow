@@ -1,4 +1,4 @@
 whereIsSnow
 ===========
 
-I have been required to do this, I am confused
+Now defunct project for a visualizing #Snowden on twitter. 
